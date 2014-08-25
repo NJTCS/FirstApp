@@ -18,8 +18,33 @@
 		$("#results").html("");
 	});
 	</script>
+    <a id="applink1" href="fb://profile/116201417">open facebook with fallback to appstore</a>
 
     <iframe src="http://etechhead.com" width="100%" frameborder="0" height="500px"></iframe>
+
+    <script type="text/javascript">
+
+    // To avoid the "protocol not supported" alert, fail must open another app.
+    var appstore = "itms://itunes.apple.com/us/app/facebook/id284882215?mt=8&uo=6";
+
+    function applink(fail) {
+        return function () {
+            var clickedAt = +new Date;
+            // During tests on 3g/3gs this timeout fires immediately if less than 500ms.
+            setTimeout(function () {
+                // To avoid failing on return to MobileSafari, ensure freshness!
+                if (+new Date - clickedAt < 2000) {
+                    window.location = fail;
+                }
+            }, 500);
+        };
+    }
+
+    document.getElementById("applink1").onclick = applink(appstore);
+
+    </script>
+
+    
 
 </body>
 </html>
